@@ -12,7 +12,7 @@ class Post extends Model
     use HasFactory;
 
 //    protected $hidden = ['title'];
-    protected $appends = ['title_upper_case'];
+//    protected $appends = ['title_upper_case'];
     protected $fillable = [
         'title', 'body',
     ];

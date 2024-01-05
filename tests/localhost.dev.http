@@ -86,7 +86,8 @@ Content-Type: application/json
 
 {
     "title": "Do my homework",
-    "body": ""
+    "body": [],
+    "user_ids": [1,2]
 }
 
 ###
