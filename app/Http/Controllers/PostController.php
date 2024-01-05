@@ -2,53 +2,53 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostResource;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(): ResourceCollection
     {
-        $posts = Post::query()
-            //->where('id', '=', 1)
-            ->get();
-        return response()->json([
-            'data' => $posts,
-        ]);
+        $posts = Post::query()->get();
+        return PostResource::collection($posts);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): PostResource
     {
-        $created = Post::query()->create([
-            'title' => $request->title,
-            'body' => $request->body,
-        ]);
-        return response()->json([
-            'data' => $created,
-        ]);
+        $created = DB::transaction(function () use ($request) {
+            $created = Post::query()->create([
+                'title' => $request->title,
+                'body' => $request->body,
+            ]);
+            $created->users()->sync($request->user_ids);
+            return $created;
+        });
+
+        return new PostResource($created);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Post $post): PostResource
     {
-        return response()->json([
-            'data' => $post,
-        ]);
+        return new PostResource($post);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post): JsonResponse
+    public function update(Request $request, Post $post): PostResource|JsonResponse
     {
         //$post->update($request->only(['title', 'body']));
         $updated = $post->update([
@@ -60,9 +60,7 @@ class PostController extends Controller
                 'errors' => ['Failed to update model.'],
             ], 400);
         }
-        return response()->json([
-            'data' => $post,
-        ]);
+        return new PostResource($post);
     }
 
     /**

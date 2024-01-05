@@ -2,51 +2,47 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CommentResource;
 use App\Models\Comment;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class CommentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(): ResourceCollection
     {
         $comments = Comment::query()->get();
-        return response()->json([
-            'data' => $comments,
-        ]);
+        return CommentResource::collection($comments);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): CommentResource
     {
         $created = Comment::query()->create([
             'title' => $request->title,
             'body' => $request->body,
         ]);
-        return response()->json([
-            'data' => $created,
-        ]);
+        return new CommentResource($created);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Comment $comment): JsonResponse
+    public function show(Comment $comment): CommentResource
     {
-        return response()->json([
-            'data' => $comment,
-        ]);
+        return new CommentResource($comment);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Comment $comment): JsonResponse
+    public function update(Request $request, Comment $comment): CommentResource|JsonResponse
     {
         $updated = $comment->update([
             'title' => $request->title ?? $comment->title,
@@ -57,9 +53,7 @@ class CommentController extends Controller
                 'errors' => ['Failed to update resource.'],
             ], 400);
         }
-        return response()->json([
-            'data' => $comment,
-        ]);
+        return new CommentResource($comment);
     }
 
     /**

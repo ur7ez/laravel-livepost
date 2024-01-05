@@ -2,52 +2,48 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): JsonResponse
+    public function index(): ResourceCollection
     {
         $users = User::query()->get();
-        return response()->json([
-            'data' => $users,
-        ]);
+        return UserResource::collection($users);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): UserResource
     {
         $created = User::query()->create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
         ]);
-        return response()->json([
-            'data' => $created,
-        ]);
+        return new UserResource($created);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user): JsonResponse
+    public function show(User $user): UserResource
     {
-        return response()->json([
-            'data' => $user,
-        ]);
+        return new UserResource($user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): JsonResponse
+    public function update(Request $request, User $user): UserResource|JsonResponse
     {
         $updated = $user->update([
             'name' => $request->name ?? $user->name,
@@ -60,9 +56,7 @@ class UserController extends Controller
                 'error' => 'Failed to update resource.',
             ]);
         }
-        return response()->json([
-            'data' => $user,
-        ]);
+        return new UserResource($user);
     }
 
     /**
