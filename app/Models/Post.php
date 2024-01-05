@@ -11,6 +11,12 @@ class Post extends Model
 {
     use HasFactory;
 
+//    protected $hidden = ['title'];
+    protected $appends = ['title_upper_case'];
+    protected $fillable = [
+        'title', 'body',
+    ];
+//    protected $guarded = ['title'];
     protected $casts = [
         'body' => 'array',  // body response is in json
     ];
