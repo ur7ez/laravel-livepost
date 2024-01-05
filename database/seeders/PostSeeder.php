@@ -23,9 +23,9 @@ class PostSeeder extends Seeder
         $this->truncate('posts');
         // $this->truncate('comments');
         /** @var Collection $posts */
-        $posts = Post::factory(3)
+        $posts = Post::factory(200)
             //->has(Comment::factory(3), 'comments')
-            ->untitled()
+            //->untitled()
             ->create();  // Collection of posts
         $posts->each(function (Post $post) {
             $post->users()->sync([FactoryHelper::getRandomModelId(User::class)]);
