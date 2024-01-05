@@ -1,0 +1,161 @@
+### User Auth
+
+# Get all Users
+GET {{endpoint}}/users
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# Get User
+GET {{endpoint}}/users/1
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# Create new User
+POST {{endpoint}}/users
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# Update User
+PATCH {{endpoint}}/users/1
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# Delete User
+DELETE {{endpoint}}/users/1
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# Auth Login
+POST {{endpoint}}/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "kassulke.alanis@example.org",
+    "password": "password"
+}
+
+###
+
+# Auth Register
+POST {{endpoint}}/register
+Content-Type: application/json
+Accept: application/json
+
+{
+    "name": "John Smith",
+    "email": "jsmith@example.com",
+    "password": "password",
+    "password_confirmation": "password"
+}
+
+###
+
+### Posts
+
+# List all posts
+GET {{endpoint}}/posts
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# get Post by ID
+GET {{endpoint}}/posts/1
+Accept: application/json
+Content-Type: application/json
+#Authorization: Bearer {{API_AccessToken2}}
+
+###
+
+# create new Post
+POST {{endpoint}}/posts
+Accept: application/json
+Content-Type: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "title": "Do my homework",
+    "body": ""
+}
+
+###
+
+# update Post by ID
+PATCH {{endpoint}}/posts/4
+Accept: application/json
+Content-Type: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "title": "Do some homework (updated)",
+    "body": ""
+}
+
+###
+
+# delete Post by ID
+DELETE {{endpoint}}/posts/4
+Accept: application/json
+Content-Type: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+### Comments
+
+# Create new Comment for user
+POST {{endpoint}}/comments
+Accept: application/json
+Content-Type: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "title": "School",
+    "body": ""
+}
+
+###
+
+# Update Comment by ID for user
+PATCH {{endpoint}}/comments/1
+Accept: application/json
+Content-Type: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "title": "University"
+}
+
+###
+
+# Show Comment by ID for user
+GET {{endpoint}}/comments/1
+Accept: application/json
+Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# List Comments for user
+GET {{endpoint}}/comments
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# delete Comment by ID
+DELETE {{endpoint}}/comments/2
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
