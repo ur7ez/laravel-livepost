@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -13,22 +14,22 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): ResourceCollection
+    public function index(Request $request): ResourceCollection
     {
-        $users = User::query()->get();
+        $users = User::query()->paginate($request->page_size ?? 20);
         return UserResource::collection($users);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): UserResource
+    public function store(Request $request, UserRepository $repository): UserResource
     {
-        $created = User::query()->create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
-        ]);
+        $created = $repository->create($request->only([
+            'name',
+            'email',
+            'password',
+        ]));
         return new UserResource($created);
     }
 
@@ -43,33 +44,23 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user): UserResource|JsonResponse
+    public function update(Request $request, User $user, UserRepository $repository): UserResource|JsonResponse
     {
-        $updated = $user->update([
-            'name' => $request->name ?? $user->name,
-            'email' => $request->email ?? $user->email,
-            'password' => $request->password ?? $user->password,
-        ]);
+        $updated =  $repository->update($user, $request->only([
+            'name',
+            'email',
+            'password',
+        ]));
 
-        if (!$updated) {
-            return response()->json([
-                'error' => 'Failed to update resource.',
-            ]);
-        }
-        return new UserResource($user);
+        return new UserResource($updated);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): JsonResponse
+    public function destroy(User $user, UserRepository $repository): JsonResponse
     {
-        $deleted = $user->forceDelete();
-        if (!$deleted) {
-            return response()->json([
-                'error' => 'Failed to delete resource.'
-            ]);
-        }
+        $deleted = $repository->forceDelete($user);
         return response()->json([
             'data' => 'success',
         ]);
