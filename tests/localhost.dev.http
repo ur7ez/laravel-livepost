@@ -63,8 +63,8 @@ Accept: application/json
 
 ### Posts
 
-# List all posts
-GET {{endpoint}}/posts?page=2&page_size=5
+# List all posts   ?page=2&page_size=5
+GET {{endpoint}}/posts
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 

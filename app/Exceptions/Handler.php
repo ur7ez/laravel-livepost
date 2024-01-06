@@ -18,12 +18,20 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
+    protected $dontReport = [
+        //GeneralJsonException::class,
+    ];
+
     /**
      * Register the exception handling callbacks for the application.
      */
     public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
+        $this->reportable(function (GeneralJsonException $e) {
+            //
+        });
+
+        $this->renderable(function (GeneralJsonException $e) {
             //
         });
     }
