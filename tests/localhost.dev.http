@@ -16,8 +16,15 @@ Accept: application/json
 
 # Create new User
 POST {{endpoint}}/users
+Content-Type: application/json
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "name": "John Smith",
+    "email": "jsmith@example.com",
+    "password": "password"
+}
 
 ###
 
@@ -35,7 +42,7 @@ Accept: application/json
 
 ###
 
-# Auth Login
+# User Login
 POST {{endpoint}}/login
 Content-Type: application/json
 Accept: application/json
@@ -46,18 +53,6 @@ Accept: application/json
 }
 
 ###
-
-# Auth Register
-POST {{endpoint}}/register
-Content-Type: application/json
-Accept: application/json
-
-{
-    "name": "John Smith",
-    "email": "jsmith@example.com",
-    "password": "password",
-    "password_confirmation": "password"
-}
 
 ###
 
@@ -87,7 +82,10 @@ Content-Type: application/json
 {
     "title": "reterwt434",
     "body": [],
-    "user_ids": [1,2]
+    "user_ids": [
+        1,
+        2
+    ]
 }
 
 ###
@@ -101,7 +99,10 @@ Content-Type: application/json
 {
     "title": "Do some homework (updated)",
     "body": [],
-    "user_ids": [4,7]
+    "user_ids": [
+        4,
+        7
+    ]
 }
 
 ###

@@ -24,13 +24,20 @@ class UserController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * @bodyParam name string required Name of the user. Example: John Doe
+     * @bodyParam email string required Email of the user. Example: doe@doe.com
+     * @apiResource UserResource
+     * @apiResourceModel User
+     * @param Request $request
+     * @param UserRepository $repository
+     * @return UserResource
      */
     public function store(Request $request, UserRepository $repository): UserResource
     {
         $created = $repository->create($request->only([
             'name',
             'email',
-            'password',
+             'password',
         ]));
         return new UserResource($created);
     }

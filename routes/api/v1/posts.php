@@ -4,7 +4,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware([
-//'auth:sanctum',
+    //'auth:sanctum',
 ])
     ->name('posts.')
     ->group(function () {
