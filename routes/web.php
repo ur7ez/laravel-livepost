@@ -19,5 +19,11 @@ Route::get('/', function () {
 });
 
 if (App::environment('local')) {
-    Route::get('/playground', [\App\Mail\WelcomeMail::class, 'render']);
+    Route::get('/playground', function () {
+        $user = \App\Models\User::factory()->make();
+
+        \Illuminate\Support\Facades\Mail::to($user)
+            ->send(new \App\Mail\WelcomeMail($user));
+        return response('Email sent OK');
+    });
 }

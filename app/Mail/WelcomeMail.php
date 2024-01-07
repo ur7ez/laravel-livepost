@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -13,10 +14,12 @@ class WelcomeMail extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $theme = 'default';
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(public User $user)
     {
         //
     }
@@ -27,7 +30,7 @@ class WelcomeMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome Mail',
+            subject: 'Welcome to Livepost!',
         );
     }
 
@@ -37,7 +40,10 @@ class WelcomeMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.welcome-mail',
+            markdown: 'mail.welcome-mail',
+            with: [
+                'url' => 'https://google.com',
+            ],
         );
     }
 
