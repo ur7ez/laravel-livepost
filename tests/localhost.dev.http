@@ -82,10 +82,7 @@ Content-Type: application/json
 {
     "title": "reterwt434",
     "body": [],
-    "user_ids": [
-        1,
-        2
-    ]
+    "user_ids": [1, 2]
 }
 
 ###
