@@ -80,9 +80,11 @@ Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "title": "reterwt434",
-    "body": [],
-    "user_ids": [1, 2]
+  "title": "1",
+  "user_ids": [
+    "abc",
+    2
+  ]
 }
 
 ###

@@ -24,7 +24,7 @@ class PostStoreRequest extends FormRequest
     {
         return [
             'title' => 'string|required',
-            'body' => 'string|required',
+            'body' => 'array|required',
             'user_ids' => [
                 'array',
                 'required',
@@ -39,10 +39,10 @@ class PostStoreRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
-            'title.string' => 'Hey use a string',
+            'title.string' => 'Title should be a string',
             'body.required' => 'Please enter a value for body',
         ];
     }

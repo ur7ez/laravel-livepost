@@ -19,7 +19,7 @@ class IntegerArray implements ValidationRule
     {
         $integerOnly = collect($value)->every(fn($el) => is_int($el));
         if (!$integerOnly) {
-            $fail($attribute . ' can only be integers.');
+            $fail(':attribute can only be integers.');
         }
     }
 }
