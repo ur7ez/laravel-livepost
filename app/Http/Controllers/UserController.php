@@ -17,13 +17,13 @@ class UserController extends Controller
      */
     public function index(Request $request): ResourceCollection
     {
-        event(new UserCreated(User::factory()->make()));
+        // event(new UserCreated(User::factory()->make()));
         $users = User::query()->paginate($request->page_size ?? 20);
         return UserResource::collection($users);
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      * @bodyParam name string required Name of the user. Example: John Doe
      * @bodyParam email string required Email of the user. Example: doe@doe.com
      * @apiResource UserResource
@@ -31,13 +31,14 @@ class UserController extends Controller
      * @param Request $request
      * @param UserRepository $repository
      * @return UserResource
+     * @throws \Throwable
      */
     public function store(Request $request, UserRepository $repository): UserResource
     {
         $created = $repository->create($request->only([
             'name',
             'email',
-             'password',
+            // 'password',
         ]));
         return new UserResource($created);
     }
@@ -55,10 +56,10 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user, UserRepository $repository): UserResource|JsonResponse
     {
-        $updated =  $repository->update($user, $request->only([
+        $updated = $repository->update($user, $request->only([
             'name',
             'email',
-            'password',
+            // 'password',
         ]));
 
         return new UserResource($updated);

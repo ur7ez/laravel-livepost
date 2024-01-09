@@ -19,10 +19,10 @@ Route::middleware([
     //'auth:sanctum',
 ])
     ->name('users.')
+    ->namespace("\App\Http\Controllers")
     ->group(function () {
-//        Route::apiResource('users', UserController::class);
         Route::get('/users', [UserController::class, 'index'])
-            ->withoutMiddleware('auth:sanctum')
+            ->withoutMiddleware('auth')
             ->name('index');
         Route::get('/users/{user}', [UserController::class, 'show'])
             ->name('show')

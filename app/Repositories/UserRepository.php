@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\DB;
 class UserRepository extends BaseRepository
 {
 
+    /**
+     * @throws \Throwable
+     */
     public function create(array $attributes)
     {
         return DB::transaction(function () use ($attributes) {
@@ -33,7 +36,7 @@ class UserRepository extends BaseRepository
             $updated = $user->update([
                 'name' => data_get($attributes, 'name', $user->name),
                 'email' => data_get($attributes, 'email', $user->email),
-                'password' => data_get($attributes, 'password', $user->password),
+                //'password' => data_get($attributes, 'password', $user->password),
             ]);
             throw_if(!$updated, GeneralJsonException::class, 'Failed to update user');
             event(new UserUpdated($user));
