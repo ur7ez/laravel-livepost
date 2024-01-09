@@ -10,6 +10,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
+/**
+ * @group User Management
+ *
+ * APIs to manage the user resource.
+ */
 class UserController extends Controller
 {
     /**
@@ -24,22 +29,15 @@ class UserController extends Controller
 
     /**
      * Store a newly created user in storage.
-     * @bodyParam name string required Name of the user. Example: John Doe
-     * @bodyParam email string required Email of the user. Example: doe@doe.com
-     * @apiResource UserResource
-     * @apiResourceModel User
-     * @param Request $request
-     * @param UserRepository $repository
-     * @return UserResource
-     * @throws \Throwable
      */
     public function store(Request $request, UserRepository $repository): UserResource
     {
-        $created = $repository->create($request->only([
+        $payload = $request->only([
             'name',
             'email',
             // 'password',
-        ]));
+        ]);
+        $created = $repository->create($payload);
         return new UserResource($created);
     }
 
