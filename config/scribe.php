@@ -136,6 +136,7 @@ INTRO
     'example_languages' => [
         'bash',
         'javascript',
+        'php',
     ],
 
     // Generate a Postman collection (v2.1.0) in addition to HTML docs.

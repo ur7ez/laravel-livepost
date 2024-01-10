@@ -116,41 +116,46 @@ Content-Type: application/json
 
 ### Comments
 
-# Create new Comment for user
+# Create new Comment
 POST {{endpoint}}/comments
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "title": "School",
-    "body": ""
+    "body": "test body",
+    "user_id": 1,
+    "post_id": 1
 }
 
 ###
 
-# Update Comment by ID for user
+# Update Comment by ID
 PATCH {{endpoint}}/comments/1
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "title": "University"
+    "body": "new test body",
+    "user_id": 1,
+    "post_id": 1
 }
 
 ###
 
-# Show Comment by ID for user
+# Show Comment by ID
 GET {{endpoint}}/comments/1
 Accept: application/json
+Content-Type: application/json
 Authorization: Bearer {{API_AccessToken1}}
 
 ###
 
-# List Comments for user
+# List Comments
 GET {{endpoint}}/comments
 Accept: application/json
+Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 ###
