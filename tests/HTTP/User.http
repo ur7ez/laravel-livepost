@@ -5,9 +5,8 @@ Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "email": "mariela.gutmann@example.net",
-    "password": "password",
-    "remember": false
+    "email": "testen@example.net",
+    "password": "password"
 }
 
 ###
@@ -19,8 +18,8 @@ Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "name": "Mike UR7EZ",
-    "email": "ur7ez@example.net",
+    "name": "Text Email Notification",
+    "email": "testEN@example.net",
     "password": "12345678",
     "password_confirmation": "12345678"
 }
@@ -78,6 +77,50 @@ Accept: application/json
     "password": "password",
     "password_confirmation": "password",
     "token": "d10991240fc512099b2cfd556d89f86dd045dfcb4a9d9dcfef5eb7bb182922a6"
+}
+
+###
+
+
+# Send email verification notification
+POST {{web_endpoint}}/email/verification-notification
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+
+# Verify email manually
+GET {{web_endpoint}}/email/verify/28/5ea15c119f37aeb22f471d3fdf4c2f8ae9188fc6?expires=1705006359&signature=aaed0eccf478372e0435acce01ebf0114e2a82452593867d73315a9bb19eee9e
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# Update user profile info
+PUT {{web_endpoint}}/user/profile-information
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "email": "testen@example.net",
+    "name": "Text Email Notification (upd)"
+}
+
+###
+
+# Update user password
+PUT {{web_endpoint}}/user/password
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "current_password": "12345678",
+    "password": "password",
+    "password_confirmation": "password"
 }
 
 ###
