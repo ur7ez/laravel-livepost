@@ -1,0 +1,83 @@
+# User Login
+POST {{web_endpoint}}/login
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "email": "mariela.gutmann@example.net",
+    "password": "password",
+    "remember": false
+}
+
+###
+
+# User register
+POST {{web_endpoint}}/register
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "name": "Mike UR7EZ",
+    "email": "ur7ez@example.net",
+    "password": "12345678",
+    "password_confirmation": "12345678"
+}
+
+###
+
+# Logout user
+POST {{web_endpoint}}/logout
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# Confirm password
+POST {{web_endpoint}}/user/confirm-password
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "password": "password"
+}
+
+###
+
+# Get confirm password status
+GET {{web_endpoint}}/user/confirmed-password-status
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+###
+
+# Forgot password request
+POST {{web_endpoint}}/forgot-password
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "email": "mariela.gutmann@example.net"
+}
+
+###
+
+# Reset password request
+POST {{web_endpoint}}/reset-password
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "email": "mariela.gutmann@example.net",
+    "password": "password",
+    "password_confirmation": "password",
+    "token": "d10991240fc512099b2cfd556d89f86dd045dfcb4a9d9dcfef5eb7bb182922a6"
+}
+
+###

@@ -1,7 +1,7 @@
-### User Auth
+# User Auth
 
 # Get all Users
-GET {{endpoint}}/users
+GET {{api_endpoint}}/users
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
@@ -9,49 +9,37 @@ Content-Type: application/json
 ###
 
 # Get User
-GET {{endpoint}}/users/1
+GET {{api_endpoint}}/users/1
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 ###
 
 # Create new User
-POST {{endpoint}}/users
+POST {{api_endpoint}}/users
 Content-Type: application/json
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "name": "John Smith",
-    "email": "jsmith@example.com",
+    "name": "John Smith2",
+    "email": "jsmith2@example.com",
     "password": "password"
 }
 
 ###
 
 # Update User
-PATCH {{endpoint}}/users/1
+PATCH {{api_endpoint}}/users/1
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 ###
 
 # Delete User
-DELETE {{endpoint}}/users/1
+DELETE {{api_endpoint}}/users/1
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
-
-###
-
-# User Login
-POST {{endpoint}}/login
-Content-Type: application/json
-Accept: application/json
-
-{
-    "email": "kassulke.alanis@example.org",
-    "password": "password"
-}
 
 ###
 
@@ -60,14 +48,14 @@ Accept: application/json
 ### Posts
 
 # List all posts   ?page=2&page_size=5
-GET {{endpoint}}/posts
+GET {{api_endpoint}}/posts
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 ###
 
 # get Post by ID
-GET {{endpoint}}/posts/1
+GET {{api_endpoint}}/posts/1
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken2}}
@@ -75,23 +63,23 @@ Content-Type: application/json
 ###
 
 # create new Post
-POST {{endpoint}}/posts
+POST {{api_endpoint}}/posts
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-  "title": "1",
-  "user_ids": [
-    "abc",
-    2
-  ]
+    "title": "1",
+    "user_ids": [
+        "abc",
+        2
+    ]
 }
 
 ###
 
 # update Post by ID
-PATCH {{endpoint}}/posts/201
+PATCH {{api_endpoint}}/posts/201
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
@@ -108,7 +96,7 @@ Content-Type: application/json
 ###
 
 # delete Post by ID
-DELETE {{endpoint}}/posts/201
+DELETE {{api_endpoint}}/posts/201
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
@@ -118,7 +106,7 @@ Content-Type: application/json
 ### Comments
 
 # Create new Comment
-POST {{endpoint}}/comments
+POST {{api_endpoint}}/comments
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
@@ -132,7 +120,7 @@ Content-Type: application/json
 ###
 
 # Update Comment by ID
-PATCH {{endpoint}}/comments/1
+PATCH {{api_endpoint}}/comments/1
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
@@ -146,7 +134,7 @@ Content-Type: application/json
 ###
 
 # Show Comment by ID
-GET {{endpoint}}/comments/1
+GET {{api_endpoint}}/comments/1
 Accept: application/json
 Content-Type: application/json
 Authorization: Bearer {{API_AccessToken1}}
@@ -154,7 +142,7 @@ Authorization: Bearer {{API_AccessToken1}}
 ###
 
 # List Comments
-GET {{endpoint}}/comments
+GET {{api_endpoint}}/comments
 Accept: application/json
 Content-Type: application/json
 #Authorization: Bearer {{API_AccessToken1}}
@@ -162,7 +150,7 @@ Content-Type: application/json
 ###
 
 # delete Comment by ID
-DELETE {{endpoint}}/comments/2
+DELETE {{api_endpoint}}/comments/2
 Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 

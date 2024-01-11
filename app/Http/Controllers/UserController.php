@@ -53,7 +53,7 @@ class UserController extends Controller
         $payload = $request->only([
             'name',
             'email',
-            // 'password',
+            'password',
         ]);
         $created = $repository->create($payload);
         return new UserResource($created);
@@ -100,7 +100,7 @@ class UserController extends Controller
     /**
      * Remove the specified user from storage.
      * @response 200 {
-            "data": "success"
+     * "data": "success"
      * }
      * @param User $user
      * @param UserRepository $repository
