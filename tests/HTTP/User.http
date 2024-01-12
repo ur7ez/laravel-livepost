@@ -1,16 +1,3 @@
-# User Login
-POST {{web_endpoint}}/login
-Content-Type: application/json
-Accept: application/json
-#Authorization: Bearer {{API_AccessToken1}}
-
-{
-    "email": "testen@example.net",
-    "password": "password"
-}
-
-###
-
 # User register
 POST {{web_endpoint}}/register
 Content-Type: application/json
@@ -26,7 +13,20 @@ Accept: application/json
 
 ###
 
-# Logout user
+# User Login
+POST {{web_endpoint}}/login
+Content-Type: application/json
+Accept: application/json
+#Authorization: Bearer {{API_AccessToken1}}
+
+{
+    "email": "testen@example.net",
+    "password": "password"
+}
+
+###
+
+# User Logout
 POST {{web_endpoint}}/logout
 Content-Type: application/json
 Accept: application/json
@@ -92,7 +92,8 @@ Accept: application/json
 
 
 # Verify email manually
-GET {{web_endpoint}}/email/verify/28/5ea15c119f37aeb22f471d3fdf4c2f8ae9188fc6?expires=1705006359&signature=aaed0eccf478372e0435acce01ebf0114e2a82452593867d73315a9bb19eee9e
+GET {{web_endpoint}}/email/verify/28/5ea15c119f37aeb22f471d3fdf4c2f8ae9188fc6?expires=1705006359&
+    signature=aaed0eccf478372e0435acce01ebf0114e2a82452593867d73315a9bb19eee9e
 Content-Type: application/json
 Accept: application/json
 
@@ -121,6 +122,55 @@ Accept: application/json
     "current_password": "12345678",
     "password": "password",
     "password_confirmation": "password"
+}
+
+###
+
+# Enable 2FA
+POST {{web_endpoint}}/user/two-factor-authentication
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# Disable 2FA
+DELETE {{web_endpoint}}/user/two-factor-authentication
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# Get 2FA QR-code
+GET {{web_endpoint}}/user/two-factor-qr-code
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# Get 2FA recovery codes
+# Each repetitive call will bring up the same set of codes
+# unles POST request is sent to the same route (see below)
+GET {{web_endpoint}}/user/two-factor-recovery-codes
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# Ask for a new set of 2FA recovery codes
+POST {{web_endpoint}}/user/two-factor-recovery-codes
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# 2FA challenge
+# Body expects 'code' or one of the 'recovery_code' received with 'user/two-factor-recovery-codes' endpoint
+POST {{web_endpoint}}/two-factor-challenge
+Content-Type: application/json
+Accept: application/json
+
+{
+    "recovery_code": "FAG5kJgDUb-lcwIkXFFac"
 }
 
 ###
