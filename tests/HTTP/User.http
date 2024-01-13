@@ -5,10 +5,10 @@ Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "name": "Text Email Notification",
-    "email": "testEN@example.net",
-    "password": "12345678",
-    "password_confirmation": "12345678"
+    "name": "test Email Verification",
+    "email": "testEV@example.net",
+    "password": "password",
+    "password_confirmation": "password"
 }
 
 ###
@@ -20,7 +20,7 @@ Accept: application/json
 #Authorization: Bearer {{API_AccessToken1}}
 
 {
-    "email": "testen@example.net",
+    "email": "testEV@example.net",
     "password": "password"
 }
 
