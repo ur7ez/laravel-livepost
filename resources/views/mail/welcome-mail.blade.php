@@ -1,5 +1,5 @@
 <x-mail::message>
-# Welcome, {{$user->name}}!!
+# {{__('auth.welcome', ['name' => $user->name]) }}!!
 
 <x-mail::button :url="$url" color="success">
 Button Text

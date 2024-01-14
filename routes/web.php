@@ -33,6 +33,22 @@ Route::get(RoutePath::for('password.reset', '/reset-password/{token}'), function
     ->name('password.reset');
 
 if (App::environment('local')) {
+
+    /*// App::setLocale('es');  // sets locale on App level
+    // Lang::setLocale('es');  // sets locale on Facade level
+    $trans = Lang::get('auth.failed');
+    $trans = __('auth.throttle', ['seconds' => 5]);
+    // current locale
+    dump(App::currentLocale());
+    dump(App::isLocale('en'));
+
+    $trans = __('this is sparta');
+    $trans = trans_choice('auth.pants', 6);
+    $trans = trans_choice('auth.apples', 2, ['baskets' => 2]);
+    $trans = __('auth.welcome', ['name' => 'sam']);
+
+    dd($trans);*/
+
     Route::get('/playground', function () {
         $user = \App\Models\User::factory()->make();
 
