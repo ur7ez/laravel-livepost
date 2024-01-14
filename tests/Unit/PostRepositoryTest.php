@@ -5,10 +5,12 @@ namespace Tests\Unit;
 use App\Exceptions\GeneralJsonException;
 use App\Models\Post;
 use App\Repositories\PostRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class PostRepositoryTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * Unit test for create method.
      */

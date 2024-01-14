@@ -6,6 +6,7 @@ use App\Events\Models\Post\PostCreated;
 use App\Events\Models\Post\PostDeleted;
 use App\Events\Models\Post\PostUpdated;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
@@ -18,6 +19,13 @@ class PostApiTest extends TestCase
     private const EndpointBase = '/api/v1';
     private const EndpointGroup = '/posts';
     protected string $endpoint = self::EndpointBase . self::EndpointGroup;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $user = User::factory()->make();
+        $this->actingAs($user);
+    }
 
     /**
      * A basic feature test example.
@@ -54,8 +62,12 @@ class PostApiTest extends TestCase
     {
         Event::fake();  // stop rising any real events
         $dummy = Post::factory()->make();
+        $dummyUser = User::factory()->create();
+
         // call show endpoint
-        $response = $this->json('post', $this->endpoint, $dummy->toArray());
+        $response = $this->json('post', $this->endpoint,
+            array_merge($dummy->toArray(), ['user_ids' => [$dummyUser->id]])
+        );
 
         // assert status
         $result = $response->assertStatus(201)->json('data');

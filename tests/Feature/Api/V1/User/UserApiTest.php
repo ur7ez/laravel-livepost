@@ -17,9 +17,15 @@ class UserApiTest extends TestCase
 
     protected string $uri = '/api/v1/users';
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $user = User::factory()->make();
+        $this->actingAs($user);
+    }
+
     public function test_index(): void
     {
-
         // load data in db
         $users = User::factory(10)->create();
         $userIds = $users->map(fn($user) => $user->id);
