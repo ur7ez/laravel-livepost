@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PostResource;
 use App\Models\Post;
+use App\Models\User;
+use App\Notifications\PostSharedNotification;
 use App\Repositories\PostRepository;
 use App\Rules\IntegerArray;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use URL;
 
@@ -139,6 +142,14 @@ class PostController extends Controller
         $url = URL::temporarySignedRoute('shared.post', now()->addDays(30), [
             'post' => $post->id,
         ]);
+
+        $users = User::query()->whereIn('id', $request->user_ids)->get(); // collection
+        Notification::send($users, new PostSharedNotification($post, $url));
+        // or via User model class:
+        /*$users->each(function (User $user) use ($post, $url) {
+            $user->notify(new PostSharedNotification($post, $url));
+        });*/
+
         return response()->json([
             'data' => $url,
         ]);

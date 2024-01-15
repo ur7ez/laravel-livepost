@@ -124,6 +124,10 @@ POST {{api_endpoint}}/posts/1/share
 Accept: application/json
 Content-Type: application/json
 
+{
+    "user_ids": [2, 3]
+}
+
 ###
 
 # Update Comment by ID
