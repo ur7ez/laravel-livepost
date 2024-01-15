@@ -1,0 +1,22 @@
+# Playground
+GET {{web_endpoint}}/playground
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# Get shared temporary url
+GET {{web_endpoint}}/shared/videos/123?expires=1705338581&
+    signature=086a19e2d28c6ba5995344180812c19f241c3e865672c9fbc120fcbe249dcc9a
+Content-Type: application/json
+Accept: application/json
+
+###
+
+# Get shared temporary url for post
+GET {{web_endpoint}}/shared/posts/1?expires=1707936265&
+    signature=d3dc291baee4662c2dc7234c74c548422e850c7e0a98334ca29ff24af05d0c52
+Content-Type: application/json
+Accept: application/json
+
+###

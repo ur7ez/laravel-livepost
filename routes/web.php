@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\RoutePath;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +34,18 @@ Route::get(RoutePath::for('password.reset', '/reset-password/{token}'), function
     ->middleware(['guest:' . config('fortify.guard')])
     ->name('password.reset');
 
+Route::get('/shared/posts/{post}', function (Request $request, Post $post) {
+    return "Specially made just for you 💕 ;) Post id: {$post->id}";
+})
+    ->name('shared.post')
+    ->middleware('signed');
+
 if (App::environment('local')) {
+    Route::get('/shared/videos/{video}', function (Request $request, $video) {
+        return 'git gud';
+    })
+        ->name('share-video')
+        ->middleware('signed');
 
     /*// App::setLocale('es');  // sets locale on App level
     // Lang::setLocale('es');  // sets locale on Facade level
@@ -50,10 +63,12 @@ if (App::environment('local')) {
     dd($trans);*/
 
     Route::get('/playground', function () {
-        $user = \App\Models\User::factory()->make();
-
-        \Illuminate\Support\Facades\Mail::to($user)
-            ->send(new \App\Mail\WelcomeMail($user));
-        return response('Email sent OK');
+        return URL::temporarySignedRoute('share-video', now()->addSeconds(30), [
+            'video' => 123
+        ]);
+//        $user = \App\Models\User::factory()->make();
+//        \Illuminate\Support\Facades\Mail::to($user)
+//            ->send(new \App\Mail\WelcomeMail($user));
+//        return response('Email sent OK');
     });
 }

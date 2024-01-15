@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostStoreRequest;
 use App\Http\Resources\PostResource;
 use App\Models\Post;
 use App\Repositories\PostRepository;
@@ -11,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Facades\Validator;
+use URL;
 
 /**
  * @group Post Management
@@ -111,7 +111,7 @@ class PostController extends Controller
     /**
      * Remove the specified post from storage.
      * @response 200 {
-            "data": "success"
+     * "data": "success"
      * }
      * @param Post $post
      * @param PostRepository $repository
@@ -122,6 +122,25 @@ class PostController extends Controller
         $res = $repository->forceDelete($post);
         return response()->json([
             'data' => 'success',
+        ]);
+    }
+
+    /**
+     * Share a specified post from storage.
+     * @response 200 {
+     * "data": "signed url..."
+     * }
+     * @param Request $request
+     * @param Post $post
+     * @return JsonResponse
+     */
+    public function share(Request $request, Post $post): JsonResponse
+    {
+        $url = URL::temporarySignedRoute('shared.post', now()->addDays(30), [
+            'post' => $post->id,
+        ]);
+        return response()->json([
+            'data' => $url,
         ]);
     }
 }
