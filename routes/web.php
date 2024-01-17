@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\ChatMessageEvent;
 use App\Models\Post;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
@@ -63,12 +64,21 @@ if (App::environment('local')) {
     dd($trans);*/
 
     Route::get('/playground', function () {
-        return URL::temporarySignedRoute('share-video', now()->addSeconds(30), [
-            'video' => 123
-        ]);
+        return null;
+//        return URL::temporarySignedRoute('share-video', now()->addSeconds(30), [
+//            'video' => 123
+//        ]);
 //        $user = \App\Models\User::factory()->make();
 //        \Illuminate\Support\Facades\Mail::to($user)
 //            ->send(new \App\Mail\WelcomeMail($user));
 //        return response('Email sent OK');
+    });
+    Route::get('/ws', function () {
+        return view('websocket');
+    });
+
+    Route::post('/chat-message', function (Request $request) {
+        event(new ChatMessageEvent($request->message, auth()->user()));
+        return null;
     });
 }
