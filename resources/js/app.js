@@ -7,6 +7,7 @@ const listMessage = document.getElementById('list-messages');
 const inputEmail = document.getElementById('input-email');
 const inputPassword = document.getElementById('input-password');
 const avatars = document.getElementById('avatars');
+const spanTyping = document.getElementById('span-typing');
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -14,7 +15,7 @@ form.addEventListener('submit', function (e) {
 
     axios.post('/chat-message', {
         message: userInput,
-    }).then(res => {
+    }).then((res) => {
         inputMessage.value = '';
     })
 });
@@ -110,12 +111,23 @@ document.getElementById('form-login').addEventListener('submit', function (e) {
     e.preventDefault();
     const email = inputEmail.value,
         password = inputPassword.value;
+
     login(email, password)
         .then(() => {
             // subscribe to WS channel
             // const channel = Echo.channel('public.chat.1');   // public channel
             // const channel = Echo.private('private.chat.1');  // private channel: no tack of subscribed users
             const channel = Echo.join('presence.chat.1');  // presence channel: keeps track of all the subscribing clients
+
+            inputMessage.addEventListener('input', function (e) {
+                if (inputMessage.value.length === 0) {
+                    channel.whisper('stop-typing', {});
+                } else {
+                    channel.whisper('typing', {
+                        email: email,
+                    });
+                }
+            });
 
             channel.here((users) => {  // channel.subscribed() for public & private channels
                 usersOnline = [...users];
@@ -137,6 +149,13 @@ document.getElementById('form-login').addEventListener('submit', function (e) {
                 .listen('.chat-message', (e) => {
                     console.log('event received: ', e);
                     addChatMessage(e.user.name, e.message);
+                    spanTyping.textContent = '';
+                })
+                .listenForWhisper('typing', (event) => {
+                    spanTyping.textContent = event.email + ' is typing...';
+                })
+                .listenForWhisper('stop-typing', (event) => {
+                    spanTyping.textContent = '';
                 });
         });
 });
