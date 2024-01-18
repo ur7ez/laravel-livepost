@@ -114,6 +114,9 @@ document.getElementById('form-login').addEventListener('submit', function (e) {
 
     login(email, password)
         .then(() => {
+
+//            updatePost();
+/*
             // subscribe to WS channel
             // const channel = Echo.channel('public.chat.1');   // public channel
             // const channel = Echo.private('private.chat.1');  // private channel: no tack of subscribed users
@@ -157,5 +160,19 @@ document.getElementById('form-login').addEventListener('submit', function (e) {
                 .listenForWhisper('stop-typing', (event) => {
                     spanTyping.textContent = '';
                 });
+            */
         });
 });
+
+updatePost();
+
+function updatePost() {
+    const socket = new WebSocket(
+        `ws://${window.location.hostname}:6001/socket/update-post?appKey=${import.meta.env.VITE_PUSHER_APP_KEY}`
+    );
+    socket.onopen = function (event) {
+        console.log('on open!');
+
+
+    };
+}

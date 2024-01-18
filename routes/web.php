@@ -2,6 +2,8 @@
 
 use App\Events\ChatMessageEvent;
 use App\Models\Post;
+use App\Websockets\SocketHandler\UpdatePostSocketHandler;
+use BeyondCode\LaravelWebSockets\Facades\WebSocketsRouter;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\RoutePath;
@@ -40,6 +42,8 @@ Route::get('/shared/posts/{post}', function (Request $request, Post $post) {
 })
     ->name('shared.post')
     ->middleware('signed');
+
+WebSocketsRouter::webSocket('/socket/update-post', UpdatePostSocketHandler::class);
 
 if (App::environment('local')) {
     Route::get('/shared/videos/{video}', function (Request $request, $video) {
