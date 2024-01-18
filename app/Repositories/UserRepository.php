@@ -30,16 +30,18 @@ class UserRepository extends BaseRepository
         });
     }
 
-    public function update($user, array $attributes)
+    public function update($user, array $attributes, bool $notify = false)
     {
-        return DB::transaction(function () use ($user, $attributes) {
+        return DB::transaction(function () use ($user, $attributes, $notify) {
             $updated = $user->update([
                 'name' => data_get($attributes, 'name', $user->name),
                 'email' => data_get($attributes, 'email', $user->email),
                 //'password' => data_get($attributes, 'password', $user->password),
             ]);
             throw_if(!$updated, GeneralJsonException::class, 'Failed to update user');
-            event(new UserUpdated($user));
+            if ($notify) {
+                event(new UserUpdated($user));
+            }
             return $user;
         });
     }

@@ -29,17 +29,17 @@ class PostRepository extends BaseRepository
         });
     }
 
-    public function update($post, array $attributes)
+    public function update($post, array $attributes, bool $notify = false)
     {
-        return DB::transaction(function () use ($post, $attributes) {
+        return DB::transaction(function () use ($post, $attributes, $notify) {
             $updated = $post->update([
                 'title' => data_get($attributes, 'title', $post->title),
                 'body' => data_get($attributes, 'body', $post->body),
             ]);
             throw_if(!$updated, GeneralJsonException::class, 'Failed to update post');
-
-            event(new PostUpdated($post));
-
+            if ($notify) {
+                event(new PostUpdated($post));
+            }
             if ($userIds = data_get($attributes, 'user_ids')) {
                 $post->users()->sync($userIds);
             }

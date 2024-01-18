@@ -172,7 +172,14 @@ function updatePost() {
     );
     socket.onopen = function (event) {
         console.log('on open!');
-
-
+        socket.send(JSON.stringify({
+            id: 1,
+            payload: {
+                title: 'some new title',
+            },
+        }))
     };
+    socket.onmessage = function (event) {
+        console.log(JSON.parse(event.data));
+    }
 }

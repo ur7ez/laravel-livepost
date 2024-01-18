@@ -25,9 +25,9 @@ class CommentRepository extends BaseRepository
         });
     }
 
-    public function update($comment, array $attributes)
+    public function update($comment, array $attributes, bool $notify = false)
     {
-        return DB::transaction(function () use ($comment, $attributes) {
+        return DB::transaction(function () use ($comment, $attributes, $notify) {
             $updated = $comment->update([
                 'body' => data_get($attributes, 'body', $comment->body),
                 'user_id' => data_get($attributes, 'user_id', $comment->user_id),
@@ -35,7 +35,9 @@ class CommentRepository extends BaseRepository
             ]);
 
             throw_if(!$updated, GeneralJsonException::class, 'Failed to update comment');
-            event(new CommentUpdated($comment));
+            if ($notify) {
+                event(new CommentUpdated($comment));
+            }
             return $comment;
         });
     }

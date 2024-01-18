@@ -17,7 +17,9 @@ abstract class BaseSocketHandler implements MessageComponentInterface
     {
         dump('on opened');
         // authenticate user
-        $this->verifyAppKey($conn);
+        $this
+            ->verifyAppKey($conn)
+            ->generateSocketId($conn);
     }
 
     /**
@@ -49,6 +51,13 @@ abstract class BaseSocketHandler implements MessageComponentInterface
             throw new UnknownAppKey($appKey);
         }
         $connection->app = $app;
+        return $this;
+    }
+
+    protected function generateSocketId(ConnectionInterface $connection)
+    {
+        $socketId = sprintf('%d.%d', random_int(1, 1000000000), random_int(1, 1000000000));
+        $connection->socketId = $socketId;
         return $this;
     }
 }
